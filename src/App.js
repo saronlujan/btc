@@ -13,15 +13,15 @@ export function App() {
   });
 
   function onChangeLevels(value) {
-    setState({...state, levels: value, interval_price: (state.limit_max - state.limit_min) / value})
+    setState({...state, levels: value, interval_price: (state.limit_max - state.limit_min) / value, interval_percent: ((state.limit_max - state.limit_min) / value / state.limit_min) * 100})
   }
 
   function onChangeIntervalPrice(value) {
-    setState({...state, interval_price: value, levels: (state.limit_max - state.limit_min) / value})
+    setState({...state, interval_price: value, levels: (state.limit_max - state.limit_min) / value, interval_percent: ((state.limit_max - state.limit_min) / state.levels)})
   }
 
   function onChangeIntervalPercent(value) {
-    setState({...state, interval_percent: value, levels: (state.limit_max - state.limit_min) / state.levels})
+    setState({...state, interval_percent: value, levels: (state.limit_max - state.limit_min) / state.levels, interval_price: (state.limit_max - state.limit_min) / state.levels})
   }
 
   return (
