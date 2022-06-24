@@ -5,8 +5,8 @@ import { ChakraProvider, Flex, FormControl, FormLabel, Input, Stack, Text } from
 export function App() {
 
   const [state, setState] = useState({
-    limit_min: 0,
-    limit_max: 0,
+    limit_min: 1000,
+    limit_max: 2000,
     levels: 0,
     interval_percent: 0,
     interval_price: 0,
@@ -17,7 +17,7 @@ export function App() {
   }
 
   function onChangeIntervalPrice(value) {
-    setState({...state, levels: value, interval_price: (state.limit_min * value) / state.limit_max})
+    setState({...state, interval_price: value, levels: ((state.limit_max - state.limit_min) / state.levels) / state.limit_max})
   }
 
   return (
