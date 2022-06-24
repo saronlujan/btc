@@ -13,15 +13,17 @@ export function App() {
   });
 
   function onChangeLevels(value) {
-    setState({...state, levels: value, interval_price: (state.limit_max - state.limit_min) / value, interval_percent: ((state.limit_max - state.limit_min) / value / state.limit_min) * 100})
+    const interval_price = (state.limit_max - state.limit_min) / value;
+    const interval_percent = (interval_price / state.limit_min) * 100;
+
+    setState({...state, levels: value, interval_price: interval_price, interval_percent: interval_percent})
   }
 
   function onChangeIntervalPrice(value) {
-    setState({...state, interval_price: value, levels: (state.limit_max - state.limit_min) / value, interval_percent: ((state.limit_max - state.limit_min) / state.levels)})
-  }
+    const levels = (state.limit_max - state.limit_min) / value;
+    const interval_percent = ((state.limit_max - state.limit_min) / state.levels);
 
-  function onChangeIntervalPercent(value) {
-    setState({...state, interval_percent: value, levels: (state.limit_max - state.limit_min) / state.levels, interval_price: (state.limit_max - state.limit_min) / state.levels})
+    setState({...state, interval_price: value, levels: levels, interval_percent: interval_percent})
   }
 
   return (
@@ -43,7 +45,7 @@ export function App() {
                 </FormControl>
                 <FormControl>
                   <FormLabel htmlFor='interval_percent'>% Intervalo:</FormLabel>
-                  <Input id='interval_percent' type='number' value={state.interval_percent} onChange={(e) => onChangeIntervalPercent(e.target.value)} />
+                  <Input id='interval_percent' type='number' value={state.interval_percent} disabled/>
                 </FormControl>
                 <FormControl>
                   <FormLabel htmlFor='interval_price'>$ Intervalo:</FormLabel>
