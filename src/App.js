@@ -12,8 +12,12 @@ export function App() {
     interval_price: 0,
   });
 
-  function onChangeSetIntervalPrice(value) {
-    setState({...state, levels: value, interval_price: state.limit_max - state.limit_min / value})
+  function onChangeLevels(value) {
+    setState({...state, levels: value, interval_price: (state.limit_max - state.limit_min) / value})
+  }
+
+  function onChangeIntervalPrice(value) {
+    setState({...state, levels: value, interval_price: (state.limit_min * value) / state.limit_max})
   }
 
   return (
@@ -31,7 +35,7 @@ export function App() {
                 </FormControl>
                 <FormControl>
                   <FormLabel htmlFor='levels'>Niveis:</FormLabel>
-                  <Input id='levels' type='number' value={state.levels} onChange={(e) => onChangeSetIntervalPrice(e.target.value)} />
+                  <Input id='levels' type='number' value={state.levels} onChange={(e) => onChangeLevels(e.target.value)} />
                 </FormControl>
                 <FormControl>
                   <FormLabel htmlFor='interval_percent'>% Intervalo:</FormLabel>
@@ -39,7 +43,7 @@ export function App() {
                 </FormControl>
                 <FormControl>
                   <FormLabel htmlFor='interval_price'>$ Intervalo:</FormLabel>
-                  <Input id='interval_price' type='number'  value={state.interval_price} onChange={(e) => setState({...state, interval_price: e.target.value})}/>
+                  <Input id='interval_price' type='number'  value={state.interval_price} onChange={(e) => onChangeIntervalPrice(e.target.value)}/>
                 </FormControl>
               </Stack>
             </Flex>
